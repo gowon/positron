@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMvcApplication", "samples\SampleMvcApplication\SampleMvcApplication.csproj", "{EBA29D28-8DEF-4AAA-854E-843C89345B92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,12 +30,17 @@ Global
 		{F9D5CCF7-8211-4150-BE92-C6191AF7423F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9D5CCF7-8211-4150-BE92-C6191AF7423F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9D5CCF7-8211-4150-BE92-C6191AF7423F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBA29D28-8DEF-4AAA-854E-843C89345B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBA29D28-8DEF-4AAA-854E-843C89345B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBA29D28-8DEF-4AAA-854E-843C89345B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBA29D28-8DEF-4AAA-854E-843C89345B92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B64AE4CF-3A4A-442D-86D2-EDA7CDA2237F} = {79B7007D-2DE5-408B-9761-BD42DA9F5FCF}
+		{EBA29D28-8DEF-4AAA-854E-843C89345B92} = {79B7007D-2DE5-408B-9761-BD42DA9F5FCF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0AD9F4A6-3A57-404A-8734-03573FC4849F}

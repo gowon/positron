@@ -30,7 +30,7 @@ namespace Positron.Core
             var port = Regex.Match(addressFeature.Addresses.First(),
                 @"(https?:\/\/.*):(\d*)").Groups[2].Value;
 
-            _webHostPortCallback.Invoke(int.Parse(port));
+            _webHostPortCallback?.Invoke(int.Parse(port));
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

@@ -10,8 +10,13 @@
         Height="450"
         Width="800">
     <DockPanel>
-        <wv2:WebView2 Name="webView"
-                      
-        />
+        <Menu Name="MainMenu" DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Dev Tools" Click="fileDevToolsMenuItem_Click" />
+                <Separator />
+                <MenuItem Header="E_xit" Click="fileExitMenuItem_Click" />
+            </MenuItem>
+        </Menu>
+        <wv2:WebView2 Name="WebView" />
     </DockPanel>
 </Window>

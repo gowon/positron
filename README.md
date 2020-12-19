@@ -16,3 +16,4 @@ Electron alternative using all .NET technologies
 - <https://laurentkempe.com/2019/09/03/WPF-and-dotnet-Generic-Host-with-dotnet-Core-3-0/>
 - <https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting>
 - <https://github.com/mortenbrudvik/KioskBrowser>
+- <https://docs.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript?view=WebView2-dotnet-1.0.664.37>

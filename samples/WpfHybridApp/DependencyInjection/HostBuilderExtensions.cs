@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Positron.Core;
+using SampleMvcApplication;
 using WpfHybridApp.Abstractions;
 using WpfHybridApp.Services;
 
@@ -67,7 +68,7 @@ namespace WpfHybridApp.DependencyInjection
                     options.Listen(IPAddress.Loopback, 0,
                         listenOptions => listenOptions.UseHttps());
                 })
-                .UseStartup<HelloWorldStartup>();
+                .UseStartup<Startup>();
         }
     }
 }

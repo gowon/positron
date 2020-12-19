@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Positron.Core\Positron.Core.csproj" />
+    <ProjectReference Include="..\SampleMvcApplication\SampleMvcApplication.csproj" />
   </ItemGroup>
 
 </Project>
