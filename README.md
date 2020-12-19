@@ -5,6 +5,13 @@ Electron alternative using all .NET technologies
 - Microsoft.Extensions.Hosting
 - WebView2
 
+
+## Mixing .NET 5 and WinRT
+
+- <https://www.thomasclaudiushuber.com/2019/04/26/calling-windows-10-apis-from-your-wpf-application/>
+- <https://github.com/thomasclaudiushuber/Wpf-Calling-Win10-WinRT-Toast-Api>
+- <https://stackoverflow.com/a/65044923/7644876>
+
 ## References
 
 - <https://github.com/zeppaman/jSOS>

@@ -68,6 +68,7 @@ namespace WpfHybridApp.DependencyInjection
                     options.Listen(IPAddress.Loopback, 0,
                         listenOptions => listenOptions.UseHttps());
                 })
+                //.UseStartup<HelloWorldStartup>();
                 .UseStartup<Startup>();
         }
     }

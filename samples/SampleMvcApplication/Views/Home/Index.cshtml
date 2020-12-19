@@ -3,6 +3,19 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 id="salute" class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<script>
+    ;
+    (async function main() {
+        try {
+            var div = document.getElementById('salute');
+            var x = await window.chrome.webview.hostObjects.sample.GetCurrentDate();
+            div.innerHTML += ` ${x}`;
+        } catch (err) {
+            div.innerHTML += ` in Regular Browser`;
+        }
+    })();
+</script>

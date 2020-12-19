@@ -13,6 +13,7 @@
         <Menu Name="MainMenu" DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Dev Tools" Click="fileDevToolsMenuItem_Click" />
+                <MenuItem Header="Sample _Toast" Click="fileSampleToastMenuItem_Click" />
                 <Separator />
                 <MenuItem Header="E_xit" Click="fileExitMenuItem_Click" />
             </MenuItem>

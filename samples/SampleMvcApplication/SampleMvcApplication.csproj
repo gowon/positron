@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <!-- DEVNOTE disable generation of exe. ref: https://stackoverflow.com/a/61613376/7644876-->
+    <UseAppHost>False</UseAppHost>
   </PropertyGroup>
 
   <ItemGroup>
