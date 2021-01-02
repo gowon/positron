@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
-using Microsoft.AspNetCore;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,22 +32,22 @@ namespace WpfHybridApp.DependencyInjection
                         .AddEnvironmentVariables()
                         // Add command line options. These take the highest priority.
                         .AddCommandLine(args);
-                }).ConfigureServices((context, services) =>
+                })
+                .ConfigureServices((context, services) =>
                 {
                     // add services
 
                     services.AddSingleton<ApplicationOptions>();
 
-                    services.AddSingleton<Func<IWebHost>>(provider =>
-                    {
-                        return () => WebHost.CreateDefaultBuilder().ConfigureWebHost().Build();
-                    });
-
-                    services.AddSingleton<WebHostPortCallback>(provider =>
-                    {
-                        var options = provider.GetRequiredService<ApplicationOptions>();
-                        return port => options.HostPort = port;
-                    });
+                    services.AddBackgroundWebHost(webHostBuilder => webHostBuilder.ConfigureWebHost(),
+                        (provider, host) =>
+                        {
+                            var options = provider.GetRequiredService<ApplicationOptions>();
+                            var addressFeature = host.ServerFeatures.Get<IServerAddressesFeature>();
+                            var port = Regex.Match(addressFeature.Addresses.First(),
+                                @"(https?:\/\/.*):(\d*)").Groups[2].Value;
+                            options.HostPort = int.Parse(port);
+                        });
 
                     services.AddHostedService<BackgroundWebHostService>();
 
@@ -55,8 +57,10 @@ namespace WpfHybridApp.DependencyInjection
                 })
                 .ConfigureLogging(loggingBuilder =>
                 {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddDebug();
+                    loggingBuilder
+                        .ClearProviders()
+                        .AddDebug()
+                        .SetMinimumLevel(LogLevel.Debug);
                 });
         }
 

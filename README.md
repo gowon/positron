@@ -1,12 +1,8 @@
 # positron
-Electron alternative using all .NET technologies
 
-- WPF
-- Microsoft.Extensions.Hosting
-- WebView2
+Proof-of-concept Electron alternative using all .NET technologies.
 
-
-## Mixing .NET 5 and WinRT
+## Mixing .NET 5 WPF and WinRT
 
 - <https://www.thomasclaudiushuber.com/2019/04/26/calling-windows-10-apis-from-your-wpf-application/>
 - <https://github.com/thomasclaudiushuber/Wpf-Calling-Win10-WinRT-Toast-Api>
@@ -24,3 +20,4 @@ Electron alternative using all .NET technologies
 - <https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting>
 - <https://github.com/mortenbrudvik/KioskBrowser>
 - <https://docs.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript?view=WebView2-dotnet-1.0.664.37>
+- <https://www.thomasclaudiushuber.com/2020/02/18/hosting-blazor-app-in-winui-3-with-webview-2-and-call-blazor-component-method-from-winui/>

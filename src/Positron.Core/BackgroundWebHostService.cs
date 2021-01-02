@@ -1,45 +1,50 @@
 ﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Positron.Core
 {
-    public delegate void WebHostPortCallback(int port);
-
     public class BackgroundWebHostService : IHostedService
     {
+        private readonly ILogger<BackgroundWebHostService> _logger;
         private readonly IWebHost _webHost;
-        private readonly WebHostPortCallback _webHostPortCallback;
+        private readonly Action<IWebHost> _webHostInitializedCallback;
 
-        public BackgroundWebHostService(Func<IWebHost> webHostFactory, WebHostPortCallback webHostPortCallback = null)
+        public BackgroundWebHostService(IWebHostBuilder builder, ILogger<BackgroundWebHostService> logger, Action<IWebHost> webHostInitializedCallback = null)
         {
-            _webHost = webHostFactory?.Invoke() ?? throw new ArgumentNullException(nameof(webHostFactory));
-            _webHostPortCallback = webHostPortCallback;
+            _webHost = builder?.Build() ?? throw new ArgumentNullException(nameof(builder));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _webHostInitializedCallback = webHostInitializedCallback;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Starting background web host.");
             await _webHost.StartAsync(cancellationToken);
-
-            var addressFeature = _webHost.ServerFeatures.Get<IServerAddressesFeature>();
-            var port = Regex.Match(addressFeature.Addresses.First(),
-                @"(https?:\/\/.*):(\d*)").Groups[2].Value;
-
-            _webHostPortCallback?.Invoke(int.Parse(port));
+            _logger.LogDebug("Executing background web host callback.");
+            _webHostInitializedCallback?.Invoke(_webHost);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            using (_webHost)
+            _logger.LogDebug("Terminating background web host.");
+            
+            try
             {
                 _webHost.StopAsync(cancellationToken).Wait(cancellationToken);
             }
-
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,"Exception occurred during web host termination.");
+            }
+            finally
+            {
+                _webHost.Dispose();
+            }
+            
             return Task.CompletedTask;
         }
     }
