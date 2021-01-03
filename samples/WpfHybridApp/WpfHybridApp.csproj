@@ -31,6 +31,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.664.37" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.1.0" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
@@ -42,7 +43,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Positron.Core\Positron.Core.csproj" />
-    <ProjectReference Include="..\SampleMvcApplication\SampleMvcApplication.csproj" />
+    <ProjectReference Include="..\SampleStaticServer\SampleStaticServer.csproj" />
   </ItemGroup>
 
 </Project>

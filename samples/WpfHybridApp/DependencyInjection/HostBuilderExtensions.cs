@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Positron.Core;
-using SampleMvcApplication;
+using SampleStaticServer;
 using WpfHybridApp.Abstractions;
 using WpfHybridApp.Services;
 
@@ -42,6 +42,7 @@ namespace WpfHybridApp.DependencyInjection
                     services.AddBackgroundWebHost(webHostBuilder => webHostBuilder.ConfigureWebHost(),
                         (provider, host) =>
                         {
+                            // get the port from the web host and update the application options
                             var options = provider.GetRequiredService<ApplicationOptions>();
                             var addressFeature = host.ServerFeatures.Get<IServerAddressesFeature>();
                             var port = Regex.Match(addressFeature.Addresses.First(),
@@ -58,7 +59,6 @@ namespace WpfHybridApp.DependencyInjection
                 .ConfigureLogging(loggingBuilder =>
                 {
                     loggingBuilder
-                        .ClearProviders()
                         .AddDebug()
                         .SetMinimumLevel(LogLevel.Debug);
                 });
@@ -72,7 +72,6 @@ namespace WpfHybridApp.DependencyInjection
                     options.Listen(IPAddress.Loopback, 0,
                         listenOptions => listenOptions.UseHttps());
                 })
-                //.UseStartup<HelloWorldStartup>();
                 .UseStartup<Startup>();
         }
     }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Positron.Core
 {
-    public class BackgroundWebHostService : IHostedService
+    public class BackgroundWebHostService : IHostedService, IDisposable
     {
         private readonly ILogger<BackgroundWebHostService> _logger;
         private readonly IWebHost _webHost;
@@ -40,12 +40,13 @@ namespace Positron.Core
             {
                 _logger.LogError(ex,"Exception occurred during web host termination.");
             }
-            finally
-            {
-                _webHost.Dispose();
-            }
-            
+
             return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            _webHost?.Dispose();
         }
     }
 }
