@@ -4,5 +4,6 @@
     {
         string Prop { get; set; }
         string GetCurrentDate();
+        string DiscoverMessages();
     }
 }

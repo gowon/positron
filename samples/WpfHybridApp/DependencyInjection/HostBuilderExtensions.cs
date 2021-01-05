@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,10 @@ namespace WpfHybridApp.DependencyInjection
                                 @"(https?:\/\/.*):(\d*)").Groups[2].Value;
                             options.HostPort = int.Parse(port);
                         });
+
+                    services.AddMediatR(typeof(HostBuilderExtensions).Assembly);
+
+                    services.AddSingleton<WebMessageBinder>();
 
                     services.AddHostedService<BackgroundWebHostService>();
 

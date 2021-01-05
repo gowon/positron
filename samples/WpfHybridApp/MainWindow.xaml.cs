@@ -3,10 +3,10 @@ using System.IO;
 using System.Windows;
 using Windows.ApplicationModel;
 using Windows.Data.Xml.Dom;
-using Windows.Storage;
 using Windows.UI.Notifications;
 using Microsoft.Web.WebView2.Core;
 using WpfHybridApp.Abstractions;
+using WpfHybridApp.Extensions;
 using WpfHybridApp.Services;
 using static WpfHybridApp.Extensions.UwpPackageDetection;
 
@@ -17,15 +17,17 @@ namespace WpfHybridApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ApplicationOptions _options;
+        private readonly WebMessageBinder _mediatorBinder;
         private readonly ISampleService _sampleService;
+        private readonly ApplicationOptions _options;
 
-        public MainWindow(ApplicationOptions options, ISampleService sampleService)
+        public MainWindow(ApplicationOptions options, WebMessageBinder mediatorBinder, ISampleService sampleService)
         {
             InitializeComponent();
 
             _options = options ?? throw new NullReferenceException(nameof(options));
-            _sampleService = sampleService ?? throw new NullReferenceException(nameof(options));
+            _mediatorBinder = mediatorBinder ?? throw new NullReferenceException(nameof(options));
+            _sampleService = sampleService;
 
             InitializeAsync();
         }
@@ -38,11 +40,12 @@ namespace WpfHybridApp
                 AdditionalBrowserArguments = "--allow-insecure-localhost"
             };
 
-            
+
             // DEVNOTE cannot use ApplicationData.Current.LocalFolder.Path, ref: https://github.com/microsoft/ProjectReunion/issues/101#issuecomment-705890839
             // TODO need better WPF local data location
             var userDataFolder = IsRunningAsUwp
-                ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Package.Current.Id.Name, "WebView2_Cache")
+                ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    Package.Current.Id.Name, "WebView2_Cache")
                 : @"C:\Temp\WebView2_Cache";
 
             var environment = await CoreWebView2Environment.CreateAsync(null, userDataFolder, options);
@@ -50,14 +53,13 @@ namespace WpfHybridApp
             // Initialize the WebView
             await WebView.EnsureCoreWebView2Async(environment);
 
-            WebView.CoreWebView2.AddHostObjectToScript("sample", _sampleService);
+            WebView.CoreWebView2.WebMessageReceived += _mediatorBinder.MessageBinder_WebMessageReceived;
 
+            WebView.CoreWebView2.AddHostObjectToScript("sampleService", _sampleService);
+            
             // Add a script to run when a page is loading
-            await WebView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(
-                // This script just posts a message with the window's URL
-                "console.log(window.document.URL);"
-            );
-
+            await WebView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(GetType().Assembly.ReadResourceAsString("SampleServiceInterface.js"));
+            
             WebView.Source = _options.HostAddress;
         }
 

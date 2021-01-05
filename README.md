@@ -78,6 +78,15 @@ The `BackgroundWebHostService` implements the [IHostedService](https://docs.micr
 
 #### WebView2 Browser Component
 
+#### Javascript Interop
+
+1. Javascript Post message is bound to a CQRS request object
+2. Request is handled by Mediatr
+3. A JSON response is asynchronously posted back to the DOM
+
+- A Message discovery API will return all request objects in JSON schema format
+- <https://github.com/korzio/djvi> can be used to create schema instances
+
 ### UWP and WinRT
 
 #### Desktop Bridge
